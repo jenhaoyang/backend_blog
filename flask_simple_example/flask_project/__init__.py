@@ -2,6 +2,7 @@ import os
 
 from flask import Flask
 
+
 def create_app(test_config=None):
     #產生flask實體並且載入設定
     app = Flask(__name__, instance_relative_config=True)#instance_relative_config告訴flask設定檔在相對於instance資料夾的路徑底下
