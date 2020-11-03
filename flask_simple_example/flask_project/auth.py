@@ -32,7 +32,7 @@ def register():
         ).fetchone() is not None:
             error = 'User {} is already registered.'.format(username)
 
-        if error is not None:
+        if error is None:
             print('insert')
             db.execute(
                 'INSERT INTO user (username, password) VALUES (?, ?)',
@@ -71,6 +71,7 @@ def login():
             return redirect(url_for('index'))
 
         flash(error)
+    return render_template('auth/login.html')
 
     #before_app_request會在view function 之前被執行
     @bp.before_app_request
