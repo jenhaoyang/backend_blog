@@ -10,7 +10,7 @@ def create_app(test_config=None):
         SECRET_KEY='dev',#開發用途使用，在正式版的時候會被下面的app.config.from_pyfile讀取的SECRET_KEY覆蓋
         DATABASE=os.path.join(app.instance_path, 'flask_project.sqlite'),#DB路徑
     )
-    
+
     #確保instance_path存在，因為flask不會自動產生instance資料夾
     try:
         os.mkdir(app.instance_path)
@@ -37,5 +37,10 @@ def create_app(test_config=None):
 
     from. import auth
     app.register_blueprint(auth.bp)
+
+    from. import blog
+    app.register_blueprint(blog.bp)
+    #將'/'視為使用index endpoint
+    app.add_url_rule('/', endpoint='index')
 
     return app

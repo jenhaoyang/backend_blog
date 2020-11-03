@@ -73,34 +73,32 @@ def login():
         flash(error)
     return render_template('auth/login.html')
 
-    #before_app_request會在view function 之前被執行
-    @bp.before_app_request
-    def load_logged_in_user():
-        user_id = session.get('user_id')
+#before_app_request會在view function 之前被執行
+@bp.before_app_request
+def load_logged_in_user():
+    user_id = session.get('user_id')
 
-        if user_id is None:
-            g.user = None
-        else:
-            g.user = get_db().execute(
-                'SELECT * FROM user WHERE id = ?' (user_id,)
-            ).fetchone()
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = get_db().execute(
+            'SELECT * FROM user WHERE id = ?', (user_id,)
+        ).fetchone()
 
-    #要logout只需要把使用者id從session刪除即可
-    @bp.route('/logout')
-    def logout():
-        session.clear()
-        return redirect(url_for('index'))
+#要logout只需要把使用者id從session刪除即可
+@bp.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('index'))
 
-    #這個裝飾器將view包上一層登入檢查，並且返回被包好的view function
-    #他可以用在任何需要檢查身分的view function
-    def login_required(view):
-        @functools.wraps(view)
-        def wrapped_view(**kwargs):
-            if g.user is None:
-                return redirect(url_for('auth.login'))
-            
-            return view(**kwargs)
+#這個裝飾器將view包上一層登入檢查，並且返回被包好的view function
+#他可以用在任何需要檢查身分的view function
+def login_required(view):
+    @functools.wraps(view)
+    def wrapped_view(**kwargs):
+        if g.user is None:
+            return redirect(url_for('auth.login'))
+        
+        return view(**kwargs)
 
-        return wrapped_view
-    
-    return render_template('auth/login.html')
+    return wrapped_view
