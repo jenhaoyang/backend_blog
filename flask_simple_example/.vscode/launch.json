@@ -10,7 +10,7 @@
             "request": "launch",
             "module": "flask",
             "env": {
-                "FLASK_APP": "flask_project",
+                "FLASK_APP": "flaskBlog",
                 "FLASK_ENV": "development",
                 "FLASK_DEBUG": "0"
             },

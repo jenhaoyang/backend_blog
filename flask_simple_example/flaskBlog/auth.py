@@ -6,7 +6,7 @@ from flask import(
 
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from flask_project.db import get_db
+from flaskBlog.db import get_db
 
 bp = Blueprint('auth', __name__, url_prefix='/auth') 
 #建立一個auth的blueprint, 需要到create_app裡面將blueprint註冊到app

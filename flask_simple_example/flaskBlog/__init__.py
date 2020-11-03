@@ -8,7 +8,7 @@ def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)#instance_relative_config告訴flask設定檔在相對於instance資料夾的路徑底下
     app.config.from_mapping(
         SECRET_KEY='dev',#開發用途使用，在正式版的時候會被下面的app.config.from_pyfile讀取的SECRET_KEY覆蓋
-        DATABASE=os.path.join(app.instance_path, 'flask_project.sqlite'),#DB路徑
+        DATABASE=os.path.join(app.instance_path, 'flaskBlog.sqlite'),#DB路徑
     )
 
     #確保instance_path存在，因為flask不會自動產生instance資料夾

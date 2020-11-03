@@ -25,7 +25,7 @@ def close_db(e=None):
 def init_db():
     db = get_db()
 
-    #open_resource:開啟相對於flask_project 資料夾的檔案
+    #open_resource:開啟相對於flaskBlog 資料夾的檔案
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
