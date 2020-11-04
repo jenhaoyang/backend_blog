@@ -1,0 +1,33 @@
+#在application context中get_db 應該要回傳相同的connection，並且在context結束後自動關閉
+
+import sqlite3
+
+import pytest
+from flaskBlog.db import get_db
+
+
+def test_get_close_db(app):
+    with app.app_context():
+        db = get_db()
+        assert db is get_db()
+
+    with pytest.raises(sqlite3.ProgrammingError) as e:
+        db.execute('SELECT 1')
+
+    assert 'close' in str(e.value)
+
+
+# init-db 命令必須呼叫init_db 並且回傳訊息
+# Pytest的monkeypatch fixture用自定義的fake_init_db取代原本的init_db。
+
+def test_init_db_command(runner, monkeypatch):
+    class Recorder(object):
+        called =False
+
+    def fake_init_db():
+        Recorder.called = True
+
+    monkeypatch.setattr('flaskBlog.db.init_db', fake_init_db)
+    result = runner.invoke(args=['init-db'])
+    assert 'Initialized' in result.output
+    assert Recorder.called
