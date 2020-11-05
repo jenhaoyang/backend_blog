@@ -12,14 +12,16 @@ def create_app(test_config=None):
     )
 
     #確保instance_path存在，因為flask不會自動產生instance資料夾
+    #注意 這裡使用makedirs，而不是mkdir，因為建立的資料夾可能不只一層
     try:
-        os.mkdir(app.instance_path)
+        os.makedirs(app.instance_path)
     except OSError:
         pass
 
     if test_config is None:
         #非測試的情況下，載入production設定檔，包含機敏資料
-        app.config.from_pyfile('config.py')
+        #使用silent=True當找不到config.py不會跳錯誤
+        app.config.from_pyfile('config.py', silent=True)
     else:
         #測試情況下載入傳入的測試設定。
         app.config.from_mapping(test_config)
