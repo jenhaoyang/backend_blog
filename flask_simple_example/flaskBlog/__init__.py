@@ -1,7 +1,7 @@
 import os
 
 from flask import Flask
-
+from flask_cors import CORS
 
 def create_app(test_config=None):
     #產生flask實體並且載入設定
@@ -10,7 +10,8 @@ def create_app(test_config=None):
         SECRET_KEY='dev',#開發用途使用，在正式版的時候會被下面的app.config.from_pyfile讀取的SECRET_KEY覆蓋
         DATABASE=os.path.join(app.instance_path, 'flaskBlog.sqlite'),#DB路徑
     )
-
+    CORS(app)
+    
     #確保instance_path存在，因為flask不會自動產生instance資料夾
     #注意 這裡使用makedirs，而不是mkdir，因為建立的資料夾可能不只一層
     try:
