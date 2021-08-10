@@ -1,4 +1,2 @@
-# backend_blog
-後端技術部落格
-
-* 使用GitPod進行線上編輯 https://gitpod.io/#https://github.com/jenhaoyang/backend_blog
+# 後端技術部落格
+* 筆記在wiki頁面https://github.com/jenhaoyang/backend_blog/wiki
